@@ -8,7 +8,8 @@ export default function BooksList() {
   const [author, setAuthor] = useState("");
   const [filtredBooks, setFiltredBooks] = useState([]);
   let authors = books.map(book => book.author_id)
-  authors = authors.filter((id, index) => authors.indexOf(id) === index).sort((a,b) => a -b);
+  // authors = authors.filter((id, index) => authors.indexOf(id) === index).sort((a,b) => a -b);
+  authors = [...new Set(authors)].sort((a,b) => a -b);
 
   useEffect(() => {
     // fetch("https://my-json-server.typicode.com/dmitrijt9/book-api-mock/books")
