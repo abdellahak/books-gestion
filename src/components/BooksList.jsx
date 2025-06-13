@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ShowBook from "./showBook";
 
 export default function BooksList() {
   const [books, setBooks] = useState([]);
+  const [book, setBook] = useState(null);
   const [search, setSearch] = useState("");
   const [author, setAuthor] = useState("");
   const [filtredBooks, setFiltredBooks] = useState([]);
@@ -44,7 +46,7 @@ export default function BooksList() {
       <Link to={"/add"}>Add Book</Link>
       <div style={{display : "flex"}}>
           <input type="search" name="search" placeholder="search..." onChange={(e) => setSearch(e.target.value)}/>
-          <select name="" id="" onChange={(e)=> setAuthor(e.target.value)}>
+          <select name="author" id="" onChange={(e)=> setAuthor(e.target.value)}>
             <option value="">All authors</option>
             {authors.map((author, index) => (
               <option key={index} value={author}>{author}</option>
@@ -75,11 +77,17 @@ export default function BooksList() {
               <td>
                 <button onClick={() => handleDelete(book.id)}>Delete</button>
                 <Link to={`/edit/${book.id}`}>Edit</Link>
+                <button onClick={() => setBook(book)}>Show</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {
+        book && (
+          <ShowBook book={book} setBook={setBook} />
+        )
+      }
     </>
   );
 }
